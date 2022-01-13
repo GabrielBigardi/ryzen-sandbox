@@ -1,6 +1,7 @@
 
 public enum RyzenState
 {
+    Spawn,
     Idle,
     Running,
     Ascending,
