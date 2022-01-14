@@ -12,9 +12,12 @@ public abstract class PlayableCharacter : MonoBehaviour
 
     // Getters
     public Rigidbody2D rb => this._rb;
-    public bool isGrounded => this._characterMovement.grounded;
-    public bool isDashing => this._characterMovement.dashing;
-    public bool isDead => this._unit.dead;
+
+    // Flags
+    public bool activeUnit => this._unit.active;
+    public bool grounded => this._characterMovement.grounded;
+    public bool dashing => this._characterMovement.dashing;
+    public bool dead => this._unit.dead;
 
     public bool takingHit => this._unit.takingHit;
     public bool invunerable => this._unit.invunerable;

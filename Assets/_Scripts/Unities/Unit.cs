@@ -12,6 +12,11 @@ public class Unit : MonoBehaviour
     [Header("Unit Health")]
     [SerializeField] [Range(10f, 5000f)] protected float _totalHP = 80f;
 
+    // Spawn Stuff
+    [Header("Spawn")]
+    [SerializeField] protected bool _hasSpawnAnimation = false;
+    [SerializeField] [Range(0.1f, 2f)] protected float _spawnDelayTime = 1f;
+
     [Header("Invulnerability")]
     [SerializeField] [Range(0.5f, 10f)] protected float _invulnerabilityTimer = 1.5f;
     [SerializeField] [Range(0.1f, 1f)] protected float _invunerabillityMiniDuration = 0.1f;
@@ -24,8 +29,10 @@ public class Unit : MonoBehaviour
     protected float _currentHP;
     protected bool _invunerable = false;
     protected bool _takingHit = false;
+    protected bool _spawning = false;
 
-    // Logic stuff 
+    // Logic stuff
+    public bool active => !this.dead && !this._spawning;
     public bool dead => this._currentHP <= 0;
     public bool takingHit => this._takingHit;
     public bool invunerable => this._invunerable;

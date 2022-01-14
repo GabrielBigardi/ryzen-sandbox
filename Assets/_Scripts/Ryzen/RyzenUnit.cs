@@ -6,6 +6,7 @@ public class RyzenUnit : Unit, IDamageable
 {
     [Header("Animation")]
     [SerializeField] [Range(0.5f, 1f)] protected float _hitAnimationTime = 0.25f;
+    [SerializeField] [Range(0.5f, 1f)] protected float _spawnAnimationTime = 0.25f;
 
     [Header("Knockback")]
     [SerializeField] [Range(0.1f, 200f)] protected float _defaultKnockBackForce = 0.25f;
@@ -14,10 +15,25 @@ public class RyzenUnit : Unit, IDamageable
     protected float _currentKnockBackForce = 0f;
     protected GameObject _currentAggressor = null;
 
+    // Monobehaviour Cycle
     protected override void Awake()
     {
         base.Awake();
         this._playableCharacter = GetComponent<PlayableCharacter>();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        if (this._hasSpawnAnimation)
+        {
+            this.StartSpawn();
+        }
+    }
+
+    protected override void Update()
+    {
+        base.Update();
     }
 
     protected void FixedUpdate()
@@ -38,6 +54,7 @@ public class RyzenUnit : Unit, IDamageable
         }
     }
 
+    // Actions
     public void TakeDamage(float amount, GameObject aggressor, float? knockBackForce)
     {
         if (this._invunerable)
@@ -74,6 +91,11 @@ public class RyzenUnit : Unit, IDamageable
         this._invunerable = true;
     }
 
+    private void StartSpawn()
+    {
+        this.StartCoroutine(this.Spawn());
+    }
+
     // Invokables
     protected void DoneTakingHit()
     {
@@ -87,8 +109,19 @@ public class RyzenUnit : Unit, IDamageable
         this._invunerable = false;
     }
 
+    protected IEnumerator Spawn()
+    {
+        this._spawning = true;
+        this._playableCharacter.ChangeState(RyzenState.Spawn.ToString());
+        yield return new WaitForSeconds(this._spawnDelayTime);
+        this._spawning = false;
+    }
+
     private IEnumerator InvulnerabilityEffect()
     {
         yield return new WaitForSeconds(.1f);
+        this._spawning = true;
+        this._playableCharacter.ChangeState(RyzenState.Spawn.ToString());
+        Invoke("DoneSpawning", this._spawnAnimationTime);
     }
 }

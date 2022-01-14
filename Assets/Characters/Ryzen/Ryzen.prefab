@@ -365,8 +365,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.011035919, y: -0.0036545992}
-  m_Size: {x: 0.4469037, y: 1.0073092}
+  m_Offset: {x: -0.011035919, y: 0.0032497048}
+  m_Size: {x: 0.4469037, y: 0.9935006}
   m_Direction: 0
 --- !u!212 &535416793
 SpriteRenderer:
@@ -433,10 +433,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _body: {fileID: 1972141231884716901}
   _totalHP: 200
+  _hasSpawnAnimation: 1
+  _spawnDelayTime: 1
   _invulnerabilityTimer: 1.5
   _invunerabillityMiniDuration: 0.1
   _invunerabillityTotalDuration: 1.5
   _hitAnimationTime: 0.5
+  _spawnAnimationTime: 0.5
   _defaultKnockBackForce: 5
 --- !u!1 &1972141231884716901
 GameObject:

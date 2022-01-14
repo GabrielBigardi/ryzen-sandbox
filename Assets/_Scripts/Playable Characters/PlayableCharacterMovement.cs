@@ -95,7 +95,7 @@ public abstract class PlayableCharacterMovement : MonoBehaviour
     // Executing stuff
     protected virtual void Move()
     {
-        if (this._playableCharacter.isDead)
+        if (this._playableCharacter.dead)
         {
             this.PreventMovement();
             return;
@@ -117,7 +117,7 @@ public abstract class PlayableCharacterMovement : MonoBehaviour
 
     protected virtual void Dash()
     {
-        if (this._playableCharacter.isDead || this._playableCharacter.takingHit)
+        if (!this._playableCharacter.activeUnit || this._playableCharacter.takingHit)
             return;
 
         if (this._currentDashTimeRemaining > 0 && this._dashing)
@@ -157,11 +157,11 @@ public abstract class PlayableCharacterMovement : MonoBehaviour
     // Checks
     protected bool CanJump()
     {
-        return !this._playableCharacter.isDead && this._grounded;
+        return this._playableCharacter.activeUnit && this._grounded;
     }
     protected bool CanDash()
     {
-        return !this._playableCharacter.isDead && this._grounded && Time.time >= this._canDashAgainTime;
+        return this._playableCharacter.activeUnit && this._grounded && Time.time >= this._canDashAgainTime;
     }
 
     // Event Callbacks
